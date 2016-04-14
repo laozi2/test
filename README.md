@@ -13,6 +13,9 @@ Table of Contents
 * [Name](#name)
 * [Status](#status)
 * [Version](#version)
+* [Config example](#Config example)
+* [Description](#Description)
+* [Directives](#Directives)
 
 
 
@@ -131,8 +134,17 @@ Directives
 * [resolver_timeout](#resolver_timeout)
 
 #### for lua module
-
-
+* [lua_package_cpath](#lua_package_cpath)
+* [lua_package_path](#lua_package_path)
+* [lua_code_cache](#lua_code_cache)
+* [init_by_lua](#init_by_lua)
+* [init_by_lua_file](#init_by_lua_file)
+* [process_by_lua](#process_by_lua)
+* [process_by_lua_file](#process_by_lua_file)
+* [lua_socket_connect_timeout](#lua_socket_connect_timeout)
+* [lua_socket_pool_size](#lua_socket_pool_size)
+* [lua_check_client_abort](#lua_check_client_abort)
+* [lua_shared_dict](#lua_shared_dict)
 
 [Back to TOC](#table-of-contents)
 
