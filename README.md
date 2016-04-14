@@ -164,14 +164,13 @@ based on principles of simple, efficient and highly extensible, the nginx-tcp mo
 And the ngx_tcp_lua module is very useful in fast implement your own service.
 
 1. Patch log.c, ngx_http_log_module, add the command `nlog`,`access_nlog` to send error_log,access_log to log server.
-2. tcp_module for customized stream protocol on tcp, support ssl.
-    example, tcp/ngx_tcp_demo_module. 
+2. tcp_module for customized stream protocol on tcp, support ssl. example, tcp/ngx_tcp_demo_module. 
 3. tcp_lua module: embeds Lua code, 100% non-blocking on network traffic.
-    3.1 just like ngx_tcp_demo_module, ngx_tcp_lua module is a special module on tcp_module.
-    3.2 enriched the functions such as init_by_lua,ngx.sleep,ngx.exit, just like nginx-lua-module
-    3.3 lua lib with cosocket to deal with mysql,http server. simple load banlance and retry also supported
-    3.4 support ngx.nlog to send log to udp log server, more than ngx.log to local file.
-    3.5 support ssl cosocket with upstream
+   * just like ngx_tcp_demo_module, ngx_tcp_lua module is a special module on tcp_module.
+   * enriched the functions such as init_by_lua,ngx.sleep,ngx.exit, just like nginx-lua-module
+   * lua lib with cosocket to deal with mysql,http server. simple load banlance and retry also supported
+   * support ngx.nlog to send log to udp log server, more than ngx.log to local file.
+   * support ssl cosocket with upstream
 4. About installation, APIs, and examples, see tcp/doc/ for more details
 
 [Back to TOC](#table-of-contents)
