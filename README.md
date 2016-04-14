@@ -17,7 +17,7 @@ Table of Contents
 * [Description](#description)
 * [Directives](#directives)
 * [Code Exapmle for ngx_tcp_lua_module](#code-exapmle-for-ngx_tcp_lua_module)
-* [API for ngx_tcp_lua_module](#api-for-ngx_tcp_lua_module)
+* [Nginx API for Lua](#nginx-api-for-lua)
 
 
 
@@ -36,7 +36,7 @@ Installation
 ==========
 1. Download the nginx-1.4.1 [HERE](http://nginx.org/download/nginx-1.4.1.tar.gz) 
 2. unzip, cd nginx-1.4.1,  copy auto.patch,src_core.patch,src_http.patch into current directory
-3. patch -p1 < auto.patch 
+3. patch -p1 < auto.patch  
    patch -p1 < src_core.patch
    patch -p1 < src_http.patch   #optional, for nginx access_nlog
 4. copy tcp/ into current src/
@@ -341,3 +341,45 @@ Code Exapmle for ngx_tcp_lua_module
 ```
 
 [Back to TOC](#table-of-contents)
+
+
+Nginx API for Lua
+==============
+* [ngx.say](#ngx.say)
+* [ngx.print](#ngx.print)
+* [ngx.receive](#ngx.receive)
+* [ngx.wait_next_request](#ngx.wait_next_request)
+* [ngx.exit](#ngx.exit)
+* [ngx.sleep](#ngx.sleep)
+* [ngx.utctime](#ngx.utctime)
+* [ngx.localtime](#ngx.localtime)
+* [ngx.time](#ngx.time)
+* [ngx.now](#ngx.now)
+* [ngx.today](#ngx.today)
+* [ngx.tcp_time](#ngx.tcp_time)
+* [ngx.parse_tcp_time](#ngx.parse_tcp_time)
+* [ngx.update_time](#ngx.update_time)
+* [ngx.shared.DICT](#ngx.shared.DICT)
+* [ngx.new_ssl_ctx](#ngx.new_ssl_ctx)
+* [ngx.socket.tcp](#ngx.socket.tcp)
+
+[Back to TOC](#table-of-contents)
+
+
+ngx.say
+------------------
+**syntax:** send_bytes, err = ngx.print(...)
+
+**context:** `process_by_lua*`
+
+**args:**
+
+**returns:**
+
+**example:**
+```lua
+local send_bytes, err = ngx.print("hello world")
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
