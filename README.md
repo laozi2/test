@@ -171,6 +171,23 @@ One server{} can have diffrent ip addresses. But one specified port only can be 
 
 [Back to TOC](#directives)
 
+protocol
+--------------------
+**syntax:** `protocol` *protocol_name*;
+
+**default:** -;
+
+**context:** server
+
+**example:**
+```nginx
+    protocol demo;
+```
+
+protocol_name must be defined in implemented module, such as ngx_tcp_demo_module. One server{} can only have one specified protocol_name.
+
+[Back to TOC](#directives)
+
 Code Exapmle for ngx_tcp_lua_module
 ===========
 
