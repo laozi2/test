@@ -64,7 +64,7 @@ Installation
 			--add-module=src/tcp/ngx_tcp_lua_module
 ```
 
-6. Build the source with lua module:
+6. Build the source with ngx_tcp_lua_module:
 ```bash
     wget http://luajit.org/download/LuaJIT-2.0.0.tar.gz
     tar -xvfz LuaJIT-2.0.0.tar.gz
@@ -78,15 +78,6 @@ Installation
     # or tell where to find Lua
     #export LUA_LIB=/path/to/lua/lib
     #export LUA_INC=/path/to/lua/include
-    
-    # Here we assume Nginx is to be installed under /usr/local/nginx/.
-    ./configure --prefix=/usr/local/nginx \
-            --with-debug \
-            --with-tcp \
-            --add-module=src/tcp/ngx_tcp_log_module \
-            --add-module=src/tcp/ngx_tcp_lua_module
-
-    make && make install
 ```
 
 
