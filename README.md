@@ -13,11 +13,11 @@ Table of Contents
 * [Name](#name)
 * [Status](#status)
 * [Version](#version)
-* [Config example](#Config-example)
-* [Description](#Description)
-* [Directives](#Directives)
-* [Code Exapmle for ngx_tcp_lua_module](#Code-Exapmle-for-ngx_tcp_lua_module)
-* [API for ngx_tcp_lua_module](#API-for-ngx_tcp_lua_module)
+* [Config example](#config-example)
+* [Description](#description)
+* [Directives](#directives)
+* [Code Exapmle for ngx_tcp_lua_module](#code-exapmle-for-ngx_tcp_lua_module)
+* [API for ngx_tcp_lua_module](#api-for-ngx_tcp_lua_module)
 
 
 
