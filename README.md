@@ -378,7 +378,8 @@ ngx.say
 
 **example:**
 ```lua
-local send_bytes, err = ngx.print("hello world")
+local send_bytes, err = ngx.print("hello world",21,nil,true,false,{"a","b"})   
+--output: hello world21niltruefalseab
 ```
 
 [Back to TOC](#nginx-api-for-lua)
