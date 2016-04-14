@@ -31,6 +31,65 @@ Version
 
 This document describes ngx_lua [v0.10.2](https://github.com/openresty/lua-nginx-module/tags) released on 8 March 2016.
 
+
+Installation
+==========
+1. Download the nginx-1.4.1 [HERE](http://nginx.org/download/nginx-1.4.1.tar.gz) 
+2. unzip, cd nginx-1.4.1,  copy auto.patch,src_core.patch,src_http.patch into current directory
+3. patch -p1 < auto.patch 
+   patch -p1 < src_core.patch
+   patch -p1 < src_http.patch   #optional, for nginx access_nlog
+4. copy tcp/ into current src/
+5. configure example
+```bash
+    # yum -y install  -y pcre* openssl*
+    # for pcre, such as ngx.gmatch etc, --with-pcre=PATH/pcre-8.36 --with-pcre-jit
+    # if use openssl, then need --with-http_ssl_module
+    #
+    export LUAJIT_LIB=/usr/local/lib
+    export LUAJIT_INC=/usr/local/include/luajit-2.0
+    ./configure --prefix=/usr/local/nginx_tcp \
+			--with-debug \
+			--with-pcre=/root/ngx_tcp_compile/softwares/pcre-8.36 \
+			--with-pcre-jit \
+			--without-http_gzip_module \
+			--with-http_stub_status_module \
+			--with-http_ssl_module \
+			--with-tcp \
+			--with-tcp_ssl_module \
+			--with-openssl=/opt/openssl-1.0.1e \
+			--with-openssl-opt=-g \
+			--add-module=src/tcp/ngx_tcp_log_module \
+			--add-module=src/tcp/ngx_tcp_demo_module \
+			--add-module=src/tcp/ngx_tcp_lua_module
+```
+
+6. Build the source with lua module:
+```bash
+    wget http://luajit.org/download/LuaJIT-2.0.0.tar.gz
+    tar -xvfz LuaJIT-2.0.0.tar.gz
+    cd LuaJIT-2.0.0
+    make &&  make install
+
+    # tell nginx's build system where to find luajit:
+    export LUAJIT_LIB=/usr/local/lib
+    export LUAJIT_INC=/usr/local/include/luajit-2.0
+
+    # or tell where to find Lua
+    #export LUA_LIB=/path/to/lua/lib
+    #export LUA_INC=/path/to/lua/include
+    
+    # Here we assume Nginx is to be installed under /usr/local/nginx/.
+    ./configure --prefix=/usr/local/nginx \
+            --with-debug \
+            --with-tcp \
+            --add-module=src/tcp/ngx_tcp_log_module \
+            --add-module=src/tcp/ngx_tcp_lua_module
+
+    make && make install
+```
+
+
 Config example
 ==========
 
@@ -109,6 +168,20 @@ Config example
 
 Description
 =========
+Based on nginx-1.4.1, refer to nginx-http-lua(https://github.com/openresty/lua-nginx-module), 
+based on principles of simple, efficient and highly extensible, the nginx-tcp module is designed as a customized stream protocol server, more than http, mail server.
+And the ngx_tcp_lua module is very useful in fast implement your own service.
+
+1. Patch log.c, ngx_http_log_module, add the command `nlog`,`access_nlog` to send error_log,access_log to log server.
+2. tcp_module for customized stream protocol on tcp, support ssl.
+    example, tcp/ngx_tcp_demo_module. 
+3. tcp_lua module: embeds Lua code, 100% non-blocking on network traffic.
+    3.1 just like ngx_tcp_demo_module, ngx_tcp_lua module is a special module on tcp_module.
+    3.2 enriched the functions such as init_by_lua,ngx.sleep,ngx.exit, just like nginx-lua-module
+    3.3 lua lib with cosocket to deal with mysql,http server. simple load banlance and retry also supported
+    3.4 support ngx.nlog to send log to udp log server, more than ngx.log to local file.
+    3.5 support ssl cosocket with upstream
+4. About installation, APIs, and examples, see tcp/doc/ for more details
 
 [Back to TOC](#table-of-contents)
 
@@ -184,9 +257,10 @@ protocol
     protocol demo;
 ```
 
-protocol_name must be defined in implemented module, such as ngx_tcp_demo_module. One server{} can only have one specified protocol_name.
+protocol_name must be defined in implemented module, such as ngx_tcp_demo_module. One server{} can only have one specified protocol_name. 
 
 [Back to TOC](#directives)
+
 
 Code Exapmle for ngx_tcp_lua_module
 ===========
