@@ -26,11 +26,8 @@ Version
 
 This document describes ngx_lua [v0.10.2](https://github.com/openresty/lua-nginx-module/tags) released on 8 March 2016.
 
-Tcp Server
-=======
-
 Config example
--------
+==========
 ```nginx
     tcp {
         #connection_pool_size 1k;   #main/srv/take one/default 0.5k
@@ -59,6 +56,52 @@ Config example
             allow 127.0.0.1;
             deny all;
         }
+        
+        #server {
+        #    listen 6433;
+        #
+        #    protocol demo;
+        #
+        #    #access_log off;
+        #    access_log logs/access_tcp.log demo;  #default access_log logs/access_tcp.log;
+        #    access_nlog 0.0.0.0:5002 0.0.0.0:5151;
+        #
+        #    ssl                  on;
+        #    ssl_certificate      xxx-chain.pem;
+        #    ssl_certificate_key  xxx-key.pem;
+        #    ssl_session_timeout  5m;
+        #    ssl_protocols  SSLv2 SSLv3 TLSv1;
+        #    ssl_ciphers  HIGH:!aNULL:!MD5;
+        #    ssl_prefer_server_ciphers   on;
+        #}
+    
     }
 
 ```
+
+for lua module
+```nginx
+
+    tcp {
+        lua_package_path '/usr/local/nginx_tcp/conf/?.lua;/usr/local/nginx_tcp/conf/lua_module/?.lua;;';
+        lua_package_cpath '/usr/local/nginx_tcp/conf/lua_module/?.so;;';
+
+        lua_shared_dict db_lock 100m;
+
+        init_by_lua_file 'conf/init_by_lua.lua';
+
+        server {
+            listen 6666;
+            
+            protocol tcp_lua;
+            process_by_lua_file 'conf/test.lua';
+    }
+```
+
+
+[Back to TOC](#table-of-contents)
+
+Description
+=========
+
+
