@@ -150,7 +150,26 @@ Directives
 
 [Back to TOC](#table-of-contents)
 
+listen
+--------------------
+**syntax:** `listen` [*ip*:]*port* [backlog=*number*] [rcvbuf=*size*] [sndbuf=*size*] [deferred] [bind] [so_keepalive=on|off|[*keepidle]:[keepintvl]:[keepcnt*]];
 
+**default:** listen *:0;
+
+**context:** server
+
+**example:**
+```nginx
+    listen 127.0.0.1:110;
+    listen *:110;
+    listen 110;     # same as *:110
+```
+
+Sets the address and port for IP on which the server will accept requests. Only IPv4 supported now.
+
+One server{} can have diffrent ip addresses. But one specified port only can be set in on server{}.
+
+[Back to TOC](#directives)
 
 Code Exapmle for ngx_tcp_lua_module
 ===========
