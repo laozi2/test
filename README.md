@@ -29,7 +29,7 @@ This document describes ngx_lua [v0.10.2](https://github.com/openresty/lua-nginx
 Config example
 ==========
 
-#### for tcp stream server
+#### nginx tcp core module, for tcp stream server
 ```nginx
     tcp {
         #connection_pool_size 1k;   #main/srv/take one/default 0.5k
@@ -81,7 +81,7 @@ Config example
 
 ```
 
-#### for lua module
+####  for lua module
 ```nginx
 
     tcp {
@@ -104,5 +104,37 @@ Config example
 
 Description
 =========
+
+[Back to TOC](#table-of-contents)
+
+
+Directives 
+==========
+
+#### for core config
+* [listen](#listen)
+* [protocol](#protocol)
+* [read_timeout](#read_timeout)
+* [send_timeout](#send_timeout)
+* [keepalive_timeout](#keepalive_timeout)
+* [connection_pool_size](#connection_pool_size)
+* [session_pool_size](#session_pool_size)
+* [client_max_body_size](#client_max_body_size)
+* [error_log](#error_log)
+* [nlog](#nlog)
+* [log_format](#log_format)
+* [access_log](#access_log)
+* [access_nlog](#access_nlog)
+* [allow](#allow)
+* [deny](#deny)
+* [resolver](#resolver)
+* [resolver_timeout](#resolver_timeout)
+
+#### for lua module
+
+
+
+[Back to TOC](#table-of-contents)
+
 
 
