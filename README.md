@@ -28,6 +28,8 @@ This document describes ngx_lua [v0.10.2](https://github.com/openresty/lua-nginx
 
 Config example
 ==========
+
+#### for tcp stream server
 ```nginx
     tcp {
         #connection_pool_size 1k;   #main/srv/take one/default 0.5k
@@ -79,7 +81,7 @@ Config example
 
 ```
 
-for lua module
+#### for lua module
 ```nginx
 
     tcp {
@@ -97,7 +99,6 @@ for lua module
             process_by_lua_file 'conf/test.lua';
     }
 ```
-
 
 [Back to TOC](#table-of-contents)
 
