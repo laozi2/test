@@ -1,11 +1,11 @@
 Name
 ====
 
-A tcp stream module for nginx. 
+ngx_tcp_module - A tcp stream module for nginx. 
 
-ngx_tcp_lua_module - Embed the power of Lua into Nginx Servers.
+ngx_tcp_lua_module - Embed the power of Lua into Nginx Servers. Work under tcp stream mode.
 
-*This module is not distributed with the Nginx source.* See [the installation instructions](#installation).
+This module is not distributed with the Nginx source. See [the installation instructions](#installation).
 
 Table of Contents
 =================
@@ -40,7 +40,7 @@ Installation
    patch -p1 < src_core.patch
    patch -p1 < src_http.patch   #optional, for nginx access_nlog
 4. copy tcp/ into current src/
-5. configure example
+5. then, ./configure and make and make isntall. here is configure example
 ```bash
     # yum -y install  -y pcre* openssl*
     # for pcre, such as ngx.gmatch etc, --with-pcre=PATH/pcre-8.36 --with-pcre-jit
