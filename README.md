@@ -154,16 +154,17 @@ Config example
             process_by_lua_file 'conf/test.lua';
     }
 ```
+and for the test.lua, see example [Code Exapmle for ngx_tcp_lua_module](#code-exapmle-for-ngx_tcp_lua_module)
 
 [Back to TOC](#table-of-contents)
 
 Description
 =========
 Based on nginx-1.4.1, refer to nginx-http-lua(https://github.com/openresty/lua-nginx-module), 
-based on principles of simple, efficient and highly extensible, the nginx-tcp module is designed as a customized stream protocol server, more than http, mail server.
+follow the principles of simple, efficient and highly extensible, the nginx-tcp module is designed as a customized stream protocol server, more than http, mail server. 
 And the ngx_tcp_lua module is very useful in fast implement your own service.
 
-1. Patch log.c, ngx_http_log_module, add the command `nlog`,`access_nlog` to send error_log,access_log to log server.
+1. Patch log.c, ngx_http_log_module.c, add the command `nlog`,`access_nlog` to send error_log,access_log to log server with udp.
 2. tcp_module for customized stream protocol on tcp, support ssl. example, tcp/ngx_tcp_demo_module. 
 3. tcp_lua module: embeds Lua code, 100% non-blocking on network traffic.
    * just like ngx_tcp_demo_module, ngx_tcp_lua module is a special module on tcp_module.
@@ -179,7 +180,7 @@ And the ngx_tcp_lua module is very useful in fast implement your own service.
 Directives 
 ==========
 
-#### for core config
+#### for ngx-tcp-core-module
 * [listen](#listen)
 * [protocol](#protocol)
 * [read_timeout](#read_timeout)
@@ -198,7 +199,7 @@ Directives
 * [resolver](#resolver)
 * [resolver_timeout](#resolver_timeout)
 
-#### for lua module
+#### for ngx-tcp-lua-module
 * [lua_package_cpath](#lua_package_cpath)
 * [lua_package_path](#lua_package_path)
 * [lua_code_cache](#lua_code_cache)
@@ -210,6 +211,9 @@ Directives
 * [lua_socket_pool_size](#lua_socket_pool_size)
 * [lua_check_client_abort](#lua_check_client_abort)
 * [lua_shared_dict](#lua_shared_dict)
+
+#### for ngx-tcp-demo-module
+* [demo_echo](#demo_echo)
 
 [Back to TOC](#table-of-contents)
 
@@ -247,7 +251,56 @@ protocol
     protocol demo;
 ```
 
-protocol_name must be defined in implemented module, such as ngx_tcp_demo_module. One server{} can only have one specified protocol_name. 
+protocol_name must be defined in an implemented module, such as ngx_tcp_demo_module. One server{} can only have one specified protocol_name. 
+
+[Back to TOC](#directives)
+
+read_timeout
+--------------------
+**syntax:** `read_timeout` *time*;
+
+**default:** 60s;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+read_timeout 60s;
+```
+
+Sets the timeout for read the whole protocol data.
+
+[Back to TOC](#directives)
+
+send_timeout
+--------------------
+**syntax:** `send_timeout` *time*;
+
+**default:** 60s;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+send_timeout 60s;
+```
+
+Sets a timeout for transmitting a response to the client. The timeout is set only between two successive write operations, not for the transmission of the whole response. If the client does not receive anything within this time, the connection is closed. 
+
+keepalive_timeout
+--------------------
+**syntax:** `keepalive_timeout` *time*;
+
+**default:** 6000s;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+send_timeout 6000s;
+```
+
+Sets a timeout during which a keep-alive client connection will stay open on the server side. The zero value disables keep-alive client connections.  (TODO: enable never close client connection)
 
 [Back to TOC](#directives)
 
