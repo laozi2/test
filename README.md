@@ -177,7 +177,7 @@ And the ngx_tcp_lua module is very useful in fast implement your own service.
 [Back to TOC](#table-of-contents)
 
 
-Directives 
+Directives
 ==========
 
 #### for ngx-tcp-core-module
