@@ -287,6 +287,8 @@ send_timeout 60s;
 
 Sets a timeout for transmitting a response to the client. The timeout is set only between two successive write operations, not for the transmission of the whole response. If the client does not receive anything within this time, the connection is closed. 
 
+[Back to TOC](#directives)
+
 keepalive_timeout
 --------------------
 **syntax:** `keepalive_timeout` *time*;
@@ -301,6 +303,23 @@ send_timeout 6000s;
 ```
 
 Sets a timeout during which a keep-alive client connection will stay open on the server side. The zero value disables keep-alive client connections.  (TODO: enable never close client connection)
+
+[Back to TOC](#directives)
+
+connection_pool_size
+--------------------
+**syntax:** `connection_pool_size` *size*;
+
+**default:** 0.5k;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+connection_pool_size 1k;
+```
+
+Allows accurate tuning of per-connection memory allocations. This directive has minimal impact on performance and should not generally be used. 
 
 [Back to TOC](#directives)
 
