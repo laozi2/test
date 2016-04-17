@@ -181,6 +181,7 @@ Directives
 ==========
 
 #### for ngx-tcp-core-module
+* [server](#server)
 * [listen](#listen)
 * [protocol](#protocol)
 * [read_timeout](#read_timeout)
@@ -191,13 +192,31 @@ Directives
 * [client_max_body_size](#client_max_body_size)
 * [error_log](#error_log)
 * [nlog](#nlog)
-* [log_format](#log_format)
-* [access_log](#access_log)
-* [access_nlog](#access_nlog)
 * [allow](#allow)
 * [deny](#deny)
 * [resolver](#resolver)
 * [resolver_timeout](#resolver_timeout)
+
+### for ngx-tcp-log-module
+* [log_format](#log_format)
+* [access_log](#access_log)
+* [access_nlog](#access_nlog)
+
+### for ngx-tcp-ssl-module
+* [ssl](#ssl)
+* [ssl_certificate](#ssl_certificate)
+* [ssl_certificate_key](#ssl_certificate_key)
+* [ssl_dhparam](#ssl_dhparam)
+* [ssl_ecdh_curve](#ssl_ecdh_curve)
+* [ssl_protocols](#ssl_protocols)
+* [ssl_ciphers](#ssl_ciphers)
+* [ssl_verify_client](#ssl_verify_client)
+* [ssl_verify_depth](#ssl_verify_depth)
+* [ssl_client_certificate](#ssl_client_certificate)
+* [ssl_prefer_server_ciphers](#ssl_prefer_server_ciphers)
+* [ssl_session_cache](#ssl_session_cache)
+* [ssl_session_timeout](#ssl_session_timeout)
+* [ssl_crl](#ssl_crl)
 
 #### for ngx-tcp-lua-module
 * [lua_package_cpath](#lua_package_cpath)
@@ -208,9 +227,12 @@ Directives
 * [process_by_lua](#process_by_lua)
 * [process_by_lua_file](#process_by_lua_file)
 * [lua_socket_connect_timeout](#lua_socket_connect_timeout)
+* [lua_socket_send_lowat](#lua_socket_send_lowat)
 * [lua_socket_pool_size](#lua_socket_pool_size)
 * [lua_check_client_abort](#lua_check_client_abort)
 * [lua_shared_dict](#lua_shared_dict)
+* [lua_regex_cache_max_entries](#lua_regex_cache_max_entries)
+* [lua_regex_match_limit](#lua_regex_match_limit)
 
 #### for ngx-tcp-demo-module
 * [demo_echo](#demo_echo)
@@ -219,7 +241,7 @@ Directives
 
 listen
 --------------------
-**syntax:** `listen` [*ip*:]*port* [backlog=*number*] [rcvbuf=*size*] [sndbuf=*size*] [deferred] [bind] [so_keepalive=on|off|[*keepidle]:[keepintvl]:[keepcnt*]];
+**syntax:** `listen` [*ip*:]*port* [backlog=*number*] [rcvbuf=*size*] [sndbuf=*size*] [deferred] [bind] [ssl]  [so_keepalive=on|off|[*keepidle]:[keepintvl]:[keepcnt*]];
 
 **default:** listen *:0;
 
@@ -234,7 +256,7 @@ listen
 
 Sets the address and port for IP on which the server will accept requests. Only IPv4 supported now.
 
-One server{} can have diffrent ip addresses. But one specified port only can be set in on server{}.
+One server{} can have diffrent ip addresses. But one specified port only can be set in one server{}.
 
 [Back to TOC](#directives)
 
@@ -320,6 +342,591 @@ connection_pool_size 1k;
 ```
 
 Allows accurate tuning of per-connection memory allocations. This directive has minimal impact on performance and should not generally be used. 
+
+[Back to TOC](#directives)
+
+session_pool_size
+--------------------
+**syntax:** `session_pool_size` *size*;
+
+**default:** 1k;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+session_pool_size 1k;
+```
+
+Allows accurate tuning of per-session memory allocations. This directive has minimal impact on performance and should not generally be used. The optimal value is little larger than average receiving data length, so it can take full use of memory and minimum times of allocations.
+
+[Back to TOC](#directives)
+
+client_max_body_size
+--------------------
+**syntax:** `client_max_body_size` *size*;
+
+**default:** 1k;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+client_max_body_size 1k;
+```
+
+Sets the maximum allowed size of the client request body, specified by protocol.
+
+[Back to TOC](#directives)
+
+error_log
+--------------------
+**syntax:** `error_log` *file* | stderr | [debug | info | notice | warn | error | crit | alert | emerg];
+
+**default:** error_log logs/error.log error;
+
+**context:** main,tcp,server
+
+**example:**
+```nginx
+error_log logs/error.log error;
+#or in tcp{},server{} below: 
+error_log logs/error_tcp.log debug_tcp; 
+```
+
+Configures logging. 'debug_tcp' can be used like 'debug_http'.
+
+[Back to TOC](#directives)
+
+nlog
+--------------------
+**syntax:** `nlog` *local_ip*:*local_port* *remote_ip*:*remote_prot*;
+
+**default:** -;
+
+**context:** main,tcp,server
+
+**example:**
+```nginx
+error_log logs/error.log error;
+nlog 0.0.0.0:5001 0.0.0.0:5151; #nlog must set after error_log.
+```
+
+Configures ip address to support logging to UDP log server.
+
+[Back to TOC](#directives)
+
+allow
+--------------------
+**syntax:** `allow` *ip* | all;
+
+**default:** -;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+allow 127.0.0.1;
+allow 127.0.0.0/24;
+allow all;
+```
+
+Allows access for the specified network or address. The rules are checked in sequence until the first match is found. 
+
+[Back to TOC](#directives)
+
+deny
+--------------------
+**syntax:** `deny` *ip* | all;
+
+**default:** -;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+deny 127.0.0.1;
+deny 127.0.0.0/24;
+deny all;
+```
+
+Denies access for the specified network or address. The rules are checked in sequence until the first match is found. 
+
+[Back to TOC](#directives)
+
+resolver
+--------------------
+**syntax:** `resolver` *address* [valid=*time*];
+
+**default:** -;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+resolver 127.0.0.1 8.8.8.8 valid=30s;;
+```
+
+Configures name servers used to resolve names of upstream servers into addresses.
+By default, nginx caches answers using the TTL value of a response. An optional valid parameter allows overriding it. 
+
+[Back to TOC](#directives)
+
+resolver_timeout
+--------------------
+**syntax:** `resolver` *time*;
+
+**default:** 30s;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+resolver_timeout 10s;
+```
+
+Sets a timeout for name resolution.
+
+[Back to TOC](#directives)
+
+log_format
+--------------------
+**syntax:** `log_format` *name* *string* ...;
+
+**default:** combined '$remote_addr $time_iso8601 $msec $request_time $connection $connection_requests $protocol';
+
+**context:** tcp,server
+
+**example:**
+```nginx
+log_format log1 '$remote_addr $time_iso8601 $msec $request_time $connection $connection_requests $bytes_sent $protocol';
+```
+
+Specifies log format.
+
+The log format can contain common variables, and variables that exist only at the time of a log write:
+
+$remote_addr
+>    client ip address.
+
+$time_local
+>    local time in the Common Log Format, "28/Sep/1970:12:00:00 +0600".
+
+$time_iso8601
+>    local time in the ISO 8601 standard format, "1970-09-28T12:00:00+06:00".
+
+$msec
+>    time in seconds with a milliseconds resolution at the time of the log write.
+
+$request_time
+>    request processing time in seconds with a milliseconds resolution; time elapsed between the first bytes were read from the client and the log write after the last bytes were sent to the client.
+
+$connection
+>    connection serial number.
+
+$connection_requests
+>    the current number of requests made through a connection.
+
+$bytes_sent
+>    the number of bytes sent to a client.
+
+$protocol
+>    the current protocol name.
+
+[Back to TOC](#directives)
+
+access_log
+--------------------
+**syntax:** `access_log` *path* | off  [*format*];
+
+**default:** logs/access_tcp.log combined;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+access_log logs/access_tcp.log log1;
+```
+
+Sets the path, format for a buffered log write. Several logs can be specified on the same level. 
+
+[Back to TOC](#directives)
+
+access_nlog
+--------------------
+**syntax:** `access_nlog` *local_ip*:*local_port*  *remote_ip*:*remote_prot*;
+
+**default:** -;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+access_log logs/access_tcp.log log1;
+access_nlog 127.0.0.1:5002 127.0.0.1:5151;#access_nlog must set after access_log.
+```
+
+Configures ip address to support logging to UDP log server.
+
+[Back to TOC](#directives)
+
+ssl
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_certificate
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_certificate_key
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_dhparam
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_ecdh_curve
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_protocols
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_ciphers
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_verify_client
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_verify_depth
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_client_certificate
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_prefer_server_ciphers
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_session_cache
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_session_timeout
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+ssl_crl
+--------------------
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+
+[Back to TOC](#directives)
+
+lua_package_cpath
+--------------------
+**syntax:** `lua_package_cpath` *lua-style-cpath-str*;
+
+**default:** *The content of LUA_CPATH environment variable or Lua's compiled-in defaults.*;
+
+**context:** tcp
+
+**example:**
+```nginx
+lua_package_cpath '/bar/baz/?.so;/blah/blah/?.so;;';
+```
+
+Sets the Lua C-module search path used by scripts specified by init_by_lua[_file], protocol_by_lua[_file]. The cpath string is in standard Lua cpath form, and ;; can be used to stand for the original cpath.
+
+[Back to TOC](#directives)
+
+lua_package_path
+--------------------
+**syntax:** `lua_package_path` *lua-style-path-str*;
+
+**default:** *The content of LUA_PATH environ variable or Lua's compiled-in defaults.*
+
+**context:** tcp
+
+**example:**
+```nginx
+lua_package_path '/foo/bar/?.lua;/blah/?.lua;;'
+```
+
+Sets the Lua module search path used by scripts specified by init_by_lua[_file], protocol_by_lua[_file]. The path string is in standard Lua path form, and ;; can be used to stand for the original search paths.
+
+[Back to TOC](#directives)
+
+lua_code_cache
+--------------------
+**syntax:** `lua_code_cache` on | off;
+
+**default:** *The content of LUA_PATH environ variable or Lua's compiled-in defaults.*
+
+**context:** tcp,server
+
+**example:**
+```nginx
+lua_code_cache on;
+```
+
+Enables or disables the Lua code cache for Lua code in *_by_lua_file directives and Lua modules.
+
+When turning off, every request served by ngx_lua will run in a separate Lua VM instance.
+
+Disabling the Lua code cache is strongly discouraged for production use and should only be used during development as it has a significant negative impact on overall performance.
+
+[Back to TOC](#directives)
+
+init_by_lua
+--------------------
+**syntax:** `init_by_lua` *lua-script-str*;
+
+**default:** -
+
+**context:** tcp
+
+**example:**
+```nginx
+init_by_lua 'a = require("a")';
+```
+
+Runs the Lua code specified by the argument <lua-script-str> on the global Lua VM level when the Nginx master process (if any) is loading the Nginx config file.
+
+[Back to TOC](#directives)
+
+init_by_lua_file
+--------------------
+**syntax:** `init_by_lua_file` *path-to-lua-script-file*;
+
+**default:** -
+
+**context:** tcp
+
+**example:**
+```nginx
+init_by_lua_file 'conf/init_by_lua.lua';
+```
+
+Equivalent to init_by_lua, except that the file specified by <path-to-lua-script-file> contains the Lua code or Lua/LuaJIT bytecode to be executed.
+
+[Back to TOC](#directives)
+
+process_by_lua
+--------------------
+**syntax:** `process_by_lua` *lua-script-str*;
+
+**default:** -
+
+**context:** server
+
+**example:**
+```nginx
+process_by_lua 'ngx.exit()';
+```
+
+Executes Lua code string specified in <lua-script-str> for requests of every connection. The Lua code may make API calls and is executed as a new spawned coroutine in an independent global environment (i.e. a sandbox).
+
+[Back to TOC](#directives)
+
+process_by_lua_file
+--------------------
+**syntax:** `process_by_lua_file` *path-to-lua-script-file*;
+
+**default:** -
+
+**context:** server
+
+**example:**
+```nginx
+process_by_lua_file 'conf/test.lua';
+```
+
+Equivalent to process_by_lua, except that the file specified by <path-to-lua-script-file> contains the Lua code or Lua/LuaJIT bytecode to be executed.
+
+[Back to TOC](#directives)
+
+lua_socket_connect_timeout
+--------------------
+**syntax:** `lua_socket_connect_timeout` *time*;
+
+**default:** 60s;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+lua_socket_connect_timeout 5;
+```
+
+This directive controls the default timeout value used in tcp socket object's connect method and can be overridden by the settimeout method.
+
+The <time> argument can be an integer, with an optional time unit, like s (second), ms (millisecond), m (minute). The default time unit is s, i.e., "second". The default setting is 60s.
+
+[Back to TOC](#directives)
+
+lua_socket_send_lowat
+--------------------
+**syntax:** `lua_socket_send_lowat` *size*;
+
+**default:** 0;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+lua_socket_send_lowat 0;
+```
+
+Controls the lowat (low water) value for the cosocket send buffer. 
+
+[Back to TOC](#directives)
+
+lua_socket_pool_size
+--------------------
+**syntax:** `lua_socket_pool_size` *size*;
+
+**default:** 30;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+lua_socket_pool_size 10;
+```
+
+Specifies the size limit (in terms of connection count) for every cosocket connection pool associated with every remote server (i.e., identified by either the host-port pair). 
+
+When the connection pool exceeds the available size limit, the least recently used (idle) connection already in the pool will be closed to make room for the current connection.
+
+Note that the cosocket connection pool is per nginx worker process rather than per nginx server instance, so size limit specified here also applies to every single nginx worker process.
+
+[Back to TOC](#directives)
+
+lua_check_client_abort
+--------------------
+**syntax:** `lua_check_client_abort` on|off;
+
+**default:** off;
+
+**context:** tcp,server
+
+**example:**
+```nginx
+lua_check_client_abort on;
+```
+
+This directive controls whether to check for premature client connection abortion. 
+
+[Back to TOC](#directives)
+
+lua_shared_dict
+--------------------
+**syntax:** `lua_shared_dict` *name* *size*;
+
+**default:** -;
+
+**context:** tcp
+
+**example:**
+```nginx
+lua_shared_dict dogs 10m;
+```
+
+Declares a shared memory zone, <name>, to serve as storage for the shm based Lua dictionary ngx.shared.<name>.
+
+Shared memory zones are always shared by all the nginx worker processes in the current nginx server instance.
+
+The <size> argument accepts size units such as k and m.  **At least 8k**;
+
+[Back to TOC](#directives)
+
+lua_shared_dict
+--------------------
+**syntax:** `lua_regex_cache_max_entries` *num*;
+
+**default:** 1024;
+
+**context:** tcp
+
+**example:**
+```nginx
+lua_shared_dict dogs 10m;
+```
+
+Specifies the maximum number of entries allowed in the worker process level compiled regex cache.
+
+The regular expressions used in ngx.re.match, ngx.re.gmatch, ngx.re.sub, and ngx.re.gsub will be cached within this cache if the regex option o (i.e., compile-once flag) is specified.
+
+[Back to TOC](#directives)
+
+lua_regex_match_limit
+--------------------
+**syntax:** `lua_regex_match_limit` *num*;
+
+**default:** 0;
+
+**context:** tcp
+
+**example:**
+```nginx
+lua_shared_dict dogs 10m;
+```
+
+Specifies the "match limit" used by the PCRE library when executing the ngx.re API. To quote the PCRE manpage, "the limit ... has the effect of limiting the amount of backtracking that can take place."
+
+When the limit is hit, the error string "pcre_exec() failed: -8" will be returned by the ngx.re API functions on the Lua land.
+
+When setting the limit to 0, the default "match limit" when compiling the PCRE library is used. And this is the default value of this directive.
+
+[Back to TOC](#directives)
+
+demo_echo
+--------------------
+**syntax:** `demo_echo` *str*;
+
+**default:** -;
+
+**context:** server
+
+**example:**
+```nginx
+demo_echo "hello world";
+```
+
+This directive is used for ngx_tcp_demo_module, which define a echo protocol. The request stream is 4 bytes head contains request data length. 
+When demo_echo string set, the server will response 4 bytes head contains response data length, and demo_echo string. when this directive not set, the response body data is request body data.
 
 [Back to TOC](#directives)
 
@@ -417,12 +1024,15 @@ Code Exapmle for ngx_tcp_lua_module
 
 Nginx API for Lua
 ==============
+* [Introduction](#introduction)
 * [ngx.say](#ngx.say)
 * [ngx.print](#ngx.print)
 * [ngx.receive](#ngx.receive)
 * [ngx.wait_next_request](#ngx.wait_next_request)
 * [ngx.exit](#ngx.exit)
+* 
 * [ngx.sleep](#ngx.sleep)
+* 
 * [ngx.utctime](#ngx.utctime)
 * [ngx.localtime](#ngx.localtime)
 * [ngx.time](#ngx.time)
@@ -431,11 +1041,76 @@ Nginx API for Lua
 * [ngx.tcp_time](#ngx.tcp_time)
 * [ngx.parse_tcp_time](#ngx.parse_tcp_time)
 * [ngx.update_time](#ngx.update_time)
-* [ngx.shared.DICT](#ngx.shared.DICT)
-* [ngx.new_ssl_ctx](#ngx.new_ssl_ctx)
+* [ngx.start_time](#ngx.start_time)
+* 
 * [ngx.socket.tcp](#ngx.socket.tcp)
+* [tcpsock:connect](#tcpsock:connect)
+* [tcpsock:sslhandshake](#tcpsock:sslhandshake)
+* [tcpsock:receive](#tcpsock:receive)
+* [tcpsock:receive_http](#tcpsock:receive_http)
+* [tcpsock:send](#tcpsock:send)
+* [tcpsock:close](#tcpsock:close)
+* [tcpsock:setoption](#tcpsock:setoption)
+* [tcpsock:settimeout](#tcpsock:settimeout)
+* [tcpsock:getreusedtimes](#tcpsock:getreusedtimes)
+* [tcpsock:setkeepalive](#tcpsock:setkeepalive)
+* 
+* [ngx.socket.udp](#ngx.socket.udp)
+* [udpsock:setpeername](#udpsock:setpeername)
+* [udpsock:send](#udpsock:send)
+* [udpsock:receive](#udpsock:receive)
+* [udpsock:settimeout](#udpsock:settimeout)
+* [udpsock:close](#udpsock:close)
+* 
+* [ngx.new_ssl_ctx](#ngx.new_ssl_ctx)
+* 
+* [Nginx log level constants](#nginx-log-level-constants)
+* [ngx.log](#ngx.log)
+* [ngx.print](#ngx.print) 
+* [ngx.nlog](#ngx.nlog)
+* [nlog:send](#nlog:send)
+* 
+* [ngx.re.find](#ngx.re.find)
+* [ngx.re.match](#ngx.re.match)
+* [ngx.re.gmatch](#ngx.re.gmatch)
+* [ngx.re.sub](#ngx.re.sub)
+* [ngx.re.gsub](#ngx.re.gsub)
+* 
+* [ngx.decode_base64](ngx.decode_base64)
+* [ngx.encode_base64](#ngx.encode_base64)
+* [ngx.md5_bin](#ngx.md5_bin)
+* [ngx.md5](#ngx.md5)
+* [ngx.sha1_bin](#ngx.sha1_bin)
+* [ngx.crc32_short](#ngx.crc32_short)
+* [ngx.crc32_long](#ngx.crc32_long)
+* [ngx.hmac_sha1](#ngx.hmac_sha1)
+* [ngx.escape_uri](#ngx.escape_uri)
+* [ngx.quote_sql_str](#ngx.quote_sql_str)
+* 
+* [ngx.shared.DICT](#ngx.shared.DICT)
+* [ngx.shared.DICT.get](#ngx.shared.DICT.get)
+* [ngx.shared.DICT.get_stale](#ngx.shared.DICT.get_stale)
+* [ngx.shared.DICT.set](#ngx.shared.DICT.set)
+* [ngx.shared.DICT.safe_set](#ngx.shared.DICT.safe_set)
+* [ngx.shared.DICT.add](#ngx.shared.DICT.add)
+* [ngx.shared.DICT.safe_add](#ngx.shared.DICT.safe_add)
+* [ngx.shared.DICT.replace](#ngx.shared.DICT.replace)
+* [ngx.shared.DICT.delete](#ngx.shared.DICT.delete)
+* [ngx.shared.DICT.incr](#ngx.shared.DICT.incr)
+* [ngx.shared.DICT.flush_all](#ngx.shared.DICT.flush_all)
+* [ngx.shared.DICT.flush_expired](#ngx.shared.DICT.flush_expired)
+* [ngx.shared.DICT.get_keys](#ngx.shared.DICT.get_keys)
 
 [Back to TOC](#table-of-contents)
+
+
+Introduction
+------------------
+The Nginx Lua API described below can only be called within the user Lua code run in the context of these configuration directives.
+
+The API is exposed to Lua in the form of two standard packages ngx and ndk. These packages are in the default global scope within ngx_lua and are always available within ngx_lua directives.
+
+Any way, lua exception will be thrown when something internal error occurs in APIs. Here are some common reason: out of memory, api calls in wrong context, wrong arguments.
 
 
 ngx.say
@@ -444,15 +1119,19 @@ ngx.say
 
 **context:** `process_by_lua*`
 
-**args:**
+**arguments:** 
+>    one or more lua variables inclue table, string, nil, number, boolean and `ngx.null`. table is array table incule other variable types.
 
-**returns:**
+**returns:** 
+>    send_bytes: 
 
 **example:**
 ```lua
 local send_bytes, err = ngx.print("hello world",21,nil,true,false,{"a","b"})   
 --output: hello world21niltruefalseab
 ```
+
+Emits arguments concatenated to the client as response body.
 
 [Back to TOC](#nginx-api-for-lua)
 
