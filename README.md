@@ -1068,7 +1068,7 @@ Nginx API for Lua
 * [ngx.log](#ngx.log)
 * [ngx.print](#ngx.print) 
 * [ngx.nlog](#ngx.nlog)
-* [nlog:send](#nlog:send)
+* [nlog:send](#nlog.send)
 * 
 * [ngx.re.find](#ngx.re.find)
 * [ngx.re.match](#ngx.re.match)
@@ -1113,7 +1113,7 @@ The API is exposed to Lua in the form of two standard packages ngx and ndk. Thes
 Any way, lua exception will be thrown when something internal error occurs in APIs. Here are some common reason: out of memory, api calls in wrong context, wrong arguments.
 
 
-ngx.say
+ngx.print
 ------------------
 **syntax:** send_bytes, err = ngx.print(...)
 
@@ -1123,7 +1123,10 @@ ngx.say
 >    one or more lua variables inclue table, string, nil, number, boolean and `ngx.null`. table is array table incule other variable types.
 
 **returns:** 
->    send_bytes: 
+>    nil, "closed" #failed, invalid socket, or client closed.
+>    nil, "will send nothing" #failed, nothing to send
+>    nil, "EAGAIN error"  #failed, network errors.
+>    *number*, nil  #success, *number* is send bytes.
 
 **example:**
 ```lua
