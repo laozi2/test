@@ -1110,8 +1110,17 @@ The Nginx Lua API described below can only be called within the user Lua code ru
 
 The API is exposed to Lua in the form of two standard packages ngx and ndk. These packages are in the default global scope within ngx_lua and are always available within ngx_lua directives.
 
-Any way, lua exception will be thrown when something internal error occurs in APIs. Here are some common reason: out of memory, api calls in wrong context, wrong arguments.
+Any way, lua exception will be thrown when something internal error occurs in APIs. Here are some common reason: out of memory, api calls in wrong context('no session found'), wrong arguments('expecting 1 or 2 arguments', 'expecting number parameter!', 'bad argument <= 0' etc).
 
+ngx.say
+------------------
+**syntax:** send_bytes, err = ngx.say(...)
+
+**context:** `process_by_lua*`
+
+Just as ngx.print but also emit a trailing newline.
+
+[Back to TOC](#nginx-api-for-lua)
 
 ngx.print
 ------------------
@@ -1120,13 +1129,14 @@ ngx.print
 **context:** `process_by_lua*`
 
 **arguments:** 
->    one or more lua variables inclue table, string, nil, number, boolean and `ngx.null`. table is array table incule other variable types.
+>     one or more lua variables inclue table, string, nil, number, boolean and `ngx.null`. table is array table incule other variable types.
 
-**returns:** 
->    nil, "closed" #failed, invalid socket, or client closed.
->    nil, "will send nothing" #failed, nothing to send
->    nil, "EAGAIN error"  #failed, network errors.
->    *number*, nil  #success, *number* is send bytes.
+**returns:**  send_bytes, err  possiable values: 
+
+>     nil, "closed"            #failed, invalid socket, or client closed.
+>     nil, "will send nothing" #failed, nothing to send
+>     nil, "EAGAIN error"      #failed, network errors.
+>     *number*, nil            #success, *number* is send bytes.
 
 **example:**
 ```lua
@@ -1138,3 +1148,271 @@ Emits arguments concatenated to the client as response body.
 
 [Back to TOC](#nginx-api-for-lua)
 
+ngx.receive
+------------------
+**syntax:** data, err, partial = ngx.receive(*totoal-size*, *at-least-size*)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+>     totoal-size :  positive integer, bytes expected receive.
+>     at-least-size : positive integer between(include) 1 and totoal-size. 
+
+**returns:**  data, err, partial  possiable values:  
+>     nil, error string, partial received data  #failed, read timedout, network errors, client closed etc.
+>    string, nil, nil #success
+
+**example:**
+```lua
+
+```
+
+Receives data from the client socket according to the reading pattern or size.
+
+This method is a synchronous operation and is 100% onblocking.
+
+at-least-size is designed to parse uncertain length protocol, such as read a line.  
+
+[Back to TOC](#nginx-api-for-lua)
+
+
+ngx.wait_next_request
+------------------
+**syntax:** ngx.wait_next_request()
+
+**context:** `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  [no]
+
+**example:**
+```lua
+while true do
+	--process request
+	--...
+	ngx.wait_next_request()
+end
+```
+
+This method separate each request in one connection, reset read/write buffer, set connection into idle state. This method is a synchronous operation and is 100% nonblocking. It will return in a new request arrival, or exit lua code when keepalive timedout. 
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.exit
+------------------
+**syntax:** ngx.exit()
+
+**context:** `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  [no]
+
+**example:**
+```lua
+
+```
+
+This method will exit from lua code, and close current client connection.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.sleep
+------------------
+**syntax:** ngx.sleep(*time-of-seconds*)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+>     time-of-seconds : sleeps for the specified seconds without blocking. One can specify time resolution up to 0.001 seconds (i.e., one milliseconds).
+
+**returns:**  [no]
+
+**example:**
+```lua
+ngx.sleep(1.5)
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.utctime
+------------------
+**syntax:** *str* = ngx.utctime()
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  
+>     str : current time stamp (in the format yyyy-mm-dd hh:mm:ss) of the nginx cached time (no syscall involved unlike Lua's os.date function).
+
+**example:**
+```lua
+
+```
+
+This is the UTC time.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.localtime
+------------------
+**syntax:** *str* = ngx.localtime()
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  
+>     str : Returns the current time stamp (in the format yyyy-mm-dd hh:mm:ss) of the nginx cached time (no syscall involved unlike Lua's os.date function).
+
+**example:**
+```lua
+
+```
+
+This is the local time.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.time
+------------------
+**syntax:** *secs* = ngx.time()
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  
+>     secs : Returns the elapsed seconds from the epoch for the current time stamp from the nginx cached time (no syscall involved unlike Lua's date library).
+
+**example:**
+```lua
+
+```
+
+Updates of the Nginx time cache an be forced by calling [ngx.update_time](#ngx.update_time) first.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.now
+------------------
+**syntax:** *secs* = ngx.now()
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  
+>     secs : Returns a floating-point number for the elapsed time in seconds (including milliseconds as the decimal part) from the epoch for the current time stamp from the nginx cached time (no syscall involved unlike Lua's date library).
+
+**example:**
+```lua
+
+```
+
+Updates of the Nginx time cache an be forced by calling [ngx.update_time](#ngx.update_time) first.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.today
+------------------
+**syntax:** *str* = ngx.today()
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  
+>     str : Returns current date (in the format yyyy-mm-dd) from the nginx cached time (no syscall involved unlike Lua's date library).
+
+**example:**
+```lua
+
+```
+
+This is the local time.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.tcp_time
+------------------
+**syntax:** *str* = ngx.tcp_time(*sec*)
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** 
+>     sec: time stamp in seconds (like those returned from ngx.time).
+
+**returns:**  
+>     str : Returns a formated string can be used as the http header time.
+
+**example:**
+```lua
+ngx.say(ngx.http_time(1290079655))
+ -- yields "Thu, 18 Nov 2010 11:27:35 GMT"
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.parse_tcp_time
+------------------
+**syntax:** *sec* = ngx.parse_http_time(*str*)
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** 
+>     str : A formated string can be used as the http header time.
+
+**returns:**  
+>     sec: time stamp in seconds (like those returned from ngx.time).
+
+**example:**
+```lua
+ local time = ngx.parse_http_time("Thu, 18 Nov 2010 11:27:35 GMT")
+ if time == nil then
+     ...
+ end
+```
+
+Parse the http time string (as returned by ngx.http_time) into seconds. Returns the seconds or nil if the input string is in bad forms.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.update_time
+------------------
+**syntax:** ngx.update_time()
+
+**context:** `init_by_lua*`, `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  [no]
+
+**example:**
+```lua
+
+```
+
+Forcibly updates the Nginx current time cache. This call involves a syscall and thus has some overhead, so do not abuse it.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.start_time
+------------------
+**syntax:** *secs* =ngx.start_time()
+
+**context:** `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  
+>     A floating-point number representing the timestamp (including milliseconds as the decimal part) when the current request was created.
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
