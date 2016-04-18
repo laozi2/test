@@ -1416,3 +1416,70 @@ ngx.start_time
 ```
 
 [Back to TOC](#nginx-api-for-lua)
+
+ngx.socket.tcp
+------------------
+**syntax:**  *tcpsock* = ngx.socket.tcp()
+
+**context:** `process_by_lua*`
+
+**arguments:** [no]
+
+**returns:**  
+>     tcpsock: Creates and returns a TCP object (also known as one type of the "cosocket" objects). 
+
+**example:**
+```lua
+
+```
+
+The following methods are supported on this object:
+*   [connect](#tcpsockconnect)
+*   [sslhandshake](#tcpsocksslhandshake)
+*   [receive](#tcpsockreceive)
+*   [receive_http](#tcpsockreceive_http)
+*   [send](#tcpsocksend)
+*   [close](#tcpsockclose)
+*   [setoption](#tcpsocksetoption)
+*   [settimeout](#tcpsocksettimeout)
+*   [getreusedtimes](#tcpsockgetreusedtimes)
+*   [setkeepalive](#tcpsocksetkeepalive)
+
+It is intended to be compatible with the TCP API of the [LuaSocket](#http://w3.impa.br/%7Ediego/software/luasocket/tcp.html) library but is 100% nonblocking out of the box. Also, we introduce some new APIs to provide more functionalities.
+
+The cosocket object created by this API function has exactly the same lifetime as the Lua handler creating it. So never pass the cosocket object to any other Lua handler (including ngx.timer callback functions) and never share the cosocket object between different NGINX requests.
+
+For every cosocket object's underlying connection, if you do not explicitly close it (via [close](#tcpsockclose)) or put it back to the connection pool (via [setkeepalive](#tcpsocksetkeepalive)), then it is automatically closed when one of the following two events happens:
+
+*    the current request handler completes, or
+*    the Lua cosocket object value gets collected by the Lua GC.
+
+Fatal errors in cosocket operations always automatically close the current connection (note that, read timeout error is the only error that is not fatal), and if you call close on a closed connection, you will get the "closed" error.
+
+After create cosocket, the default connect timedout is value set by [lua_socket_connect_timeout](#lua_socket_connect_timeout), default send timedout is value set by [send_timeout](#send_timeout), default read timedout is value set by [read_timeout](#read_timeout). And it can be changed by [sock:settimeout](#socksettimeout) in any time.
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:connect
+------------------
+**syntax:** *ok*, *err* = tcpsock:connect(*host*, *port*, *pool_name*)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+>     host: string type, need ip or domain name
+>     port: numebr type, [0,65536]
+>     pool_name: specify a custom name for the connection pool being used. If omitted, then the connection pool name will be generated from the string template "<host>:<port>"
+
+**returns:**  ok, err possiable values:
+>     1,nil : connect ok.
+>     nil,<error msg> : failed.
+
+**example:**
+```lua
+local ok,err = tcpsock:connect("127.0.0.1", 80, "httphost")
+```
+
+Calling this method on an already connected socket object will cause the original connection to be closed first.
+
+[Back to TOC](#nginx-api-for-lua)
