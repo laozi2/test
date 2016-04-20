@@ -1025,25 +1025,25 @@ Code Exapmle for ngx_tcp_lua_module
 Nginx API for Lua
 ==============
 * [Introduction](#introduction)
-* [ngx.say](#ngx.say)
-* [ngx.print](#ngx.print)
-* [ngx.receive](#ngx.receive)
-* [ngx.wait_next_request](#ngx.wait_next_request)
-* [ngx.exit](#ngx.exit)
+* [ngx.say](#ngxsay)
+* [ngx.print](#ngxprint)
+* [ngx.receive](#ngxreceive)
+* [ngx.wait_next_request](#ngxwait_next_request)
+* [ngx.exit](#ngxexit)
 * 
-* [ngx.sleep](#ngx.sleep)
+* [ngx.sleep](#ngxsleep)
 * 
-* [ngx.utctime](#ngx.utctime)
-* [ngx.localtime](#ngx.localtime)
-* [ngx.time](#ngx.time)
-* [ngx.now](#ngx.now)
-* [ngx.today](#ngx.today)
-* [ngx.tcp_time](#ngx.tcp_time)
-* [ngx.parse_tcp_time](#ngx.parse_tcp_time)
-* [ngx.update_time](#ngx.update_time)
-* [ngx.start_time](#ngx.start_time)
+* [ngx.utctime](#ngxutctime)
+* [ngx.localtime](#ngxlocaltime)
+* [ngx.time](#ngxtime)
+* [ngx.now](#ngxnow)
+* [ngx.today](#ngxtoday)
+* [ngx.tcp_time](#ngxtcp_time)
+* [ngx.parse_tcp_time](#ngxparse_tcp_time)
+* [ngx.update_time](#ngxupdate_time)
+* [ngx.start_time](#ngxstart_time)
 * 
-* [ngx.socket.tcp](#ngx.socket.tcp)
+* [ngx.socket.tcp](#ngxsockettcp)
 * [tcpsock:connect](#tcpsockconnect)
 * [tcpsock:sslhandshake](#tcpsocksslhandshake)
 * [tcpsock:receive](#tcpsockreceive)
@@ -1055,7 +1055,7 @@ Nginx API for Lua
 * [tcpsock:getreusedtimes](#tcpsockgetreusedtimes)
 * [tcpsock:setkeepalive](#tcpsocksetkeepalive)
 * 
-* [ngx.socket.udp](#ngx.socket.udp)
+* [ngx.socket.udp](#ngxsocketudp)
 * [udpsock:setpeername](#udpsocksetpeername)
 * [udpsock:send](#udpsocksend)
 * [udpsock:receive](#udpsockreceive)
@@ -1065,41 +1065,41 @@ Nginx API for Lua
 * [ngx.new_ssl_ctx](#ngx.new_ssl_ctx)
 * 
 * [Nginx log level constants](#nginx-log-level-constants)
-* [ngx.log](#ngx.log)
-* [ngx.print](#ngx.print) 
-* [ngx.nlog](#ngx.nlog)
-* [nlog:send](#nlog.send)
+* [ngx.log](#ngxlog)
+* [ngx.print](#ngxprint) 
+* [ngx.nlog](#ngxnlog)
+* [nlog:send](#nlogsend)
 * 
-* [ngx.re.find](#ngx.re.find)
-* [ngx.re.match](#ngx.re.match)
-* [ngx.re.gmatch](#ngx.re.gmatch)
-* [ngx.re.sub](#ngx.re.sub)
-* [ngx.re.gsub](#ngx.re.gsub)
+* [ngx.re.find](#ngxrefind)
+* [ngx.re.match](#ngxrematch)
+* [ngx.re.gmatch](#ngxregmatch)
+* [ngx.re.sub](#ngxresub)
+* [ngx.re.gsub](#ngxregsub)
 * 
-* [ngx.decode_base64](ngx.decode_base64)
+* [ngx.decode_base64](#ngxdecode_base64)
 * [ngx.encode_base64](#ngx.encode_base64)
-* [ngx.md5_bin](#ngx.md5_bin)
-* [ngx.md5](#ngx.md5)
-* [ngx.sha1_bin](#ngx.sha1_bin)
-* [ngx.crc32_short](#ngx.crc32_short)
-* [ngx.crc32_long](#ngx.crc32_long)
-* [ngx.hmac_sha1](#ngx.hmac_sha1)
-* [ngx.escape_uri](#ngx.escape_uri)
-* [ngx.quote_sql_str](#ngx.quote_sql_str)
+* [ngx.md5_bin](#ngxmd5_bin)
+* [ngx.md5](#ngxmd5)
+* [ngx.sha1_bin](#ngxsha1_bin)
+* [ngx.crc32_short](#ngxcrc32_short)
+* [ngx.crc32_long](#ngxcrc32_long)
+* [ngx.hmac_sha1](#ngxhmac_sha1)
+* [ngx.escape_uri](#ngxescape_uri)
+* [ngx.quote_sql_str](#ngxquote_sql_str)
 * 
-* [ngx.shared.DICT](#ngx.shared.DICT)
-* [ngx.shared.DICT.get](#ngx.shared.DICT.get)
-* [ngx.shared.DICT.get_stale](#ngx.shared.DICT.get_stale)
-* [ngx.shared.DICT.set](#ngx.shared.DICT.set)
-* [ngx.shared.DICT.safe_set](#ngx.shared.DICT.safe_set)
-* [ngx.shared.DICT.add](#ngx.shared.DICT.add)
-* [ngx.shared.DICT.safe_add](#ngx.shared.DICT.safe_add)
-* [ngx.shared.DICT.replace](#ngx.shared.DICT.replace)
-* [ngx.shared.DICT.delete](#ngx.shared.DICT.delete)
-* [ngx.shared.DICT.incr](#ngx.shared.DICT.incr)
-* [ngx.shared.DICT.flush_all](#ngx.shared.DICT.flush_all)
-* [ngx.shared.DICT.flush_expired](#ngx.shared.DICT.flush_expired)
-* [ngx.shared.DICT.get_keys](#ngx.shared.DICT.get_keys)
+* [ngx.shared.DICT](#ngxsharedDICT)
+* [ngx.shared.DICT.get](#ngxsharedDICTget)
+* [ngx.shared.DICT.get_stale](#ngxsharedDICTget_stale)
+* [ngx.shared.DICT.set](#ngxsharedDICT.set)
+* [ngx.shared.DICT.safe_set](#ngxsharedDICTsafe_set)
+* [ngx.shared.DICT.add](#ngxsharedDICTadd)
+* [ngx.shared.DICT.safe_add](#ngxsharedDICTsafe_add)
+* [ngx.shared.DICT.replace](#ngxsharedDICTreplace)
+* [ngx.shared.DICT.delete](#ngxsharedDICTdelete)
+* [ngx.shared.DICT.incr](#ngxsharedDICTincr)
+* [ngx.shared.DICT.flush_all](#ngxsharedDICTflush_all)
+* [ngx.shared.DICT.flush_expired](#ngxsharedDICTflush_expired)
+* [ngx.shared.DICT.get_keys](#ngxsharedDICTget_keys)
 
 [Back to TOC](#table-of-contents)
 
@@ -1481,5 +1481,509 @@ local ok,err = tcpsock:connect("127.0.0.1", 80, "httphost")
 ```
 
 Calling this method on an already connected socket object will cause the original connection to be closed first.
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:sslhandshake
+------------------
+**syntax:** *ok*, *err* = tcpsock:sslhandshake()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:receive
+------------------
+**syntax:** *ok*, *err* = tcpsock:receive()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:receive_http
+------------------
+**syntax:** *ok*, *err* = tcpsock:receive_http()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:send
+------------------
+**syntax:** *ok*, *err* = tcpsock:send()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:close
+------------------
+**syntax:** *ok*, *err* = tcpsock:close()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:setoption
+------------------
+**syntax:** *ok*, *err* = tcpsock:setoption()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:tcpsocksettimeout
+------------------
+**syntax:** *ok*, *err* = tcpsock:tcpsocksettimeout()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:getreusedtimes
+------------------
+**syntax:** *ok*, *err* = tcpsock:tcpsockgetreusedtimes()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+tcpsock:tcpsocksetkeepalive
+------------------
+**syntax:** *ok*, *err* = tcpsock:tcpsocksetkeepalive()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.new_ssl_ctx
+------------------
+**syntax:** *ok*, *err* = ngx.new_ssl_ctx()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.log
+------------------
+**syntax:** *ok*, *err* = ngx.log()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.print
+------------------
+**syntax:** *ok*, *err* = ngx.print()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.nlog
+------------------
+**syntax:** *ok*, *err* = ngx.nlog()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+nlog:send
+------------------
+**syntax:** *ok*, *err* = nlog:send()
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.re.find
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxrefind](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxrefind)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.re.match
+------------------
+**syntax:** captures, err = ngx.re.match(subject, regex, options?, ctx?, res_table?)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+ local m, err = ngx.re.match("hello, 1234", "[0-9]+")
+ if m then
+     -- m[0] == "1234"
+
+ else
+     if err then
+         ngx.log(ngx.ERR, "error: ", err)
+         return
+     end
+
+     ngx.say("match not found")
+ end
+
+ local m, err = ngx.re.match("hello, 1234", "([0-9])[0-9]+")
+ -- m[0] == "1234"
+ -- m[1] == "1"
+```
+Matches the subject string using the Perl compatible regular expression regex with the optional options.
+
+Only the first occurrence of the match is returned, or nil if no match is found. In case of errors, like seeing a bad regular expression or exceeding the PCRE stack limit, nil and a string describing the error will be returned.
+
+When a match is found, a Lua table captures is returned, where captures[0] holds the whole substring being matched, and captures[1] holds the first parenthesized sub-pattern's capturing, captures[2] the second, and so on.
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.re.gmatch
+------------------
+**syntax:** iterator, err = ngx.re.gmatch(subject, regex, options?)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.re.sub
+------------------
+**syntax:** iterator, err = ngx.re.sub(subject, regex, options?)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.re.gsub
+------------------
+**syntax:** iterator, err = ngx.re.gsub(subject, regex, options?)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.re.gsub
+------------------
+**syntax:** iterator, err = ngx.re.gsub(subject, regex, options?)
+
+**context:** `process_by_lua*`
+
+**arguments:** 
+
+**returns:**  ok, err possiable values: 
+
+**example:**
+```lua
+
+```
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.decode_base64
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxdecode_base64](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxdecode_base64)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.encode_base64
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxencode_base64](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxencode_base64)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.md5_bin
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5_bin](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5_bin)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.md5
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.sha1_bin
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxsha1_bin](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxsha1_bin)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.crc32_short
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_short](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_short)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.crc32_long
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_long](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_long)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.hmac_sha1
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxhmac_sha1](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxhmac_sha1)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.escape_uri
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxescape_uri](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxescape_uri)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.quote_sql_str
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxquote_sql_str](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxquote_sql_str)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT
+------------------
+Fetching the shm-based Lua dictionary object for the shared memory zone named DICT defined by the lua_shared_dict directive.
+
+Shared memory zones are always shared by all the nginx worker processes in the current nginx server instance.
+
+The resulting object dict has the following methods:
+
+* [get](#ngx.shared.DICT.get)
+* [get_stale](#ngx.shared.DICT.get_stale)
+* [set](#ngx.shared.DICT.set)
+* [safe_set](#ngx.shared.DICT.safe_set)
+* [add](#ngx.shared.DICT.add)
+* [safe_add](#ngx.shared.DICT.safe_add)
+* [replace](#ngx.shared.DICT.replace)
+* [delete](#ngx.shared.DICT.delete)
+* [incr](#ngx.shared.DICT.incr)
+* [flush_all](#ngx.shared.DICT.flush_all)
+* [flush_expired](#ngx.shared.DICT.flush_expired)
+* [get_keys](#ngx.shared.DICT.get_keys)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.get
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.get_stale
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_stale](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_stale)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.set
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictset](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictset)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.safe_set
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_set](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_set)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.add
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictadd](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictadd)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.safe_add
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_add](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_add)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.replace
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictreplace](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictreplace)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.delete
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictdelete](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictdelete)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.incr
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictincr](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictincr)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.flush_all
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_all](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_all)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.flush_expired
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_expired](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_expired)
+
+[Back to TOC](#nginx-api-for-lua)
+
+ngx.shared.DICT.get_keys
+------------------
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_keys](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_keys)
 
 [Back to TOC](#nginx-api-for-lua)
