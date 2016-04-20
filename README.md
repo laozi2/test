@@ -77,7 +77,7 @@ Installation
     #export LUA_LIB=/path/to/lua/lib
     #export LUA_INC=/path/to/lua/include
 ```
-
+[Back to TOC](#table-of-contents)
 
 Config example
 ==========
@@ -1060,7 +1060,7 @@ Nginx API for Lua
 * [udpsock:settimeout](#udpsocksettimeout)
 * [udpsock:close](#udpsockclose)
 * 
-* [ngx.new_ssl_ctx](#ngx.new_ssl_ctx)
+* [ngx.new_ssl_ctx](#ngxnew_ssl_ctx)
 * 
 * [Nginx log level constants](#nginx-log-level-constants)
 * [ngx.log](#ngxlog)
@@ -1075,7 +1075,7 @@ Nginx API for Lua
 * [ngx.re.gsub](#ngxregsub)
 * 
 * [ngx.decode_base64](#ngxdecode_base64)
-* [ngx.encode_base64](#ngx.encode_base64)
+* [ngx.encode_base64](#ngxencode_base64)
 * [ngx.md5_bin](#ngxmd5_bin)
 * [ngx.md5](#ngxmd5)
 * [ngx.sha1_bin](#ngxsha1_bin)
@@ -1290,7 +1290,7 @@ ngx.time
 
 ```
 
-Updates of the Nginx time cache an be forced by calling [ngx.update_time](#ngx.update_time) first.
+Updates of the Nginx time cache an be forced by calling [ngx.update_time](#ngxupdate_time) first.
 
 [Back to TOC](#nginx-api-for-lua)
 
@@ -1310,7 +1310,7 @@ ngx.now
 
 ```
 
-Updates of the Nginx time cache an be forced by calling [ngx.update_time](#ngx.update_time) first.
+Updates of the Nginx time cache an be forced by calling [ngx.update_time](#ngxupdate_time) first.
 
 [Back to TOC](#nginx-api-for-lua)
 
