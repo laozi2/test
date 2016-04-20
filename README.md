@@ -1456,7 +1456,7 @@ For every cosocket object's underlying connection, if you do not explicitly clos
 
 Fatal errors in cosocket operations always automatically close the current connection (note that, read timeout error is the only error that is not fatal), and if you call close on a closed connection, you will get the "closed" error.
 
-After create cosocket, the default connect timedout is value set by [lua_socket_connect_timeout](#lua_socket_connect_timeout), default send timedout is value set by [send_timeout](#send_timeout), default read timedout is value set by [read_timeout](#read_timeout). And it can be changed by [sock:settimeout](#socksettimeout) in any time.
+After create cosocket, the default connect timedout is value set by [lua_socket_connect_timeout](#lua_socket_connect_timeout), default send timedout is value set by [send_timeout](#send_timeout), default read timedout is value set by [read_timeout](#read_timeout). And it can be changed by [tcpsock:settimeout](#tcpsocksettimeout) in any time.
 
 [Back to TOC](#nginx-api-for-lua)
 
@@ -1586,9 +1586,9 @@ tcpsock:setoption
 
 [Back to TOC](#nginx-api-for-lua)
 
-tcpsock:tcpsocksettimeout
+tcpsock:settimeout
 ------------------
-**syntax:** *ok*, *err* = tcpsock:tcpsocksettimeout()
+**syntax:** *ok*, *err* = tcpsock:settimeout()
 
 **context:** `process_by_lua*`
 
@@ -1605,7 +1605,7 @@ tcpsock:tcpsocksettimeout
 
 tcpsock:getreusedtimes
 ------------------
-**syntax:** *ok*, *err* = tcpsock:tcpsockgetreusedtimes()
+**syntax:** *ok*, *err* = tcpsock:getreusedtimes()
 
 **context:** `process_by_lua*`
 
@@ -1620,9 +1620,9 @@ tcpsock:getreusedtimes
 
 [Back to TOC](#nginx-api-for-lua)
 
-tcpsock:tcpsocksetkeepalive
+tcpsock:setkeepalive
 ------------------
-**syntax:** *ok*, *err* = tcpsock:tcpsocksetkeepalive()
+**syntax:** *ok*, *err* = tcpsock:setkeepalive()
 
 **context:** `process_by_lua*`
 
