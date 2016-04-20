@@ -19,17 +19,15 @@ Table of Contents
 * [Code Exapmle for ngx_tcp_lua_module](#code-exapmle-for-ngx_tcp_lua_module)
 * [Nginx API for Lua](#nginx-api-for-lua)
 
-
-
 Status
-======
-
+=======
 Production ready.
+This markdwon is in progress...
 
 Version
 =======
 
-This document describes ngx_lua [v0.10.2](https://github.com/openresty/lua-nginx-module/tags) released on 8 March 2016.
+This document describes nginx tcp module v0.2.
 
 
 Installation
@@ -160,7 +158,7 @@ and for the test.lua, see example [Code Exapmle for ngx_tcp_lua_module](#code-ex
 
 Description
 =========
-Based on nginx-1.4.1, refer to nginx-http-lua(https://github.com/openresty/lua-nginx-module), 
+Based on nginx-1.4.1, refer to [nginx-http-lua](https://github.com/openresty/lua-nginx-module), 
 follow the principles of simple, efficient and highly extensible, the nginx-tcp module is designed as a customized stream protocol server, more than http, mail server. 
 And the ngx_tcp_lua module is very useful in fast implement your own service.
 
@@ -172,7 +170,7 @@ And the ngx_tcp_lua module is very useful in fast implement your own service.
    * lua lib with cosocket to deal with mysql,http server. simple load banlance and retry also supported
    * support ngx.nlog to send log to udp log server, more than ngx.log to local file.
    * support ssl cosocket with upstream
-4. About installation, APIs, and examples, see tcp/doc/ for more details
+4. About installation, APIs, and examples, see [tcp/doc/](https://github.com/laozi2/nginx-tcp-lua-module/tree/master/tcp/doc) for more details
 
 [Back to TOC](#table-of-contents)
 
@@ -572,85 +570,85 @@ Configures ip address to support logging to UDP log server.
 
 ssl
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_certificate
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_certificate_key
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_dhparam
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_ecdh_curve
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_protocols
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_ciphers
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_verify_client
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_verify_depth
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_client_certificate
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_prefer_server_ciphers
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_session_cache
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_session_timeout
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
 ssl_crl
 --------------------
-refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](#http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
+refer to [http://nginx.org/en/docs/http/ngx_http_ssl_module.html](http://nginx.org/en/docs/http/ngx_http_ssl_module.html) 
 
 [Back to TOC](#directives)
 
@@ -1087,19 +1085,19 @@ Nginx API for Lua
 * [ngx.escape_uri](#ngxescape_uri)
 * [ngx.quote_sql_str](#ngxquote_sql_str)
 * 
-* [ngx.shared.DICT](#ngxsharedDICT)
-* [ngx.shared.DICT.get](#ngxsharedDICTget)
-* [ngx.shared.DICT.get_stale](#ngxsharedDICTget_stale)
-* [ngx.shared.DICT.set](#ngxsharedDICT.set)
-* [ngx.shared.DICT.safe_set](#ngxsharedDICTsafe_set)
-* [ngx.shared.DICT.add](#ngxsharedDICTadd)
-* [ngx.shared.DICT.safe_add](#ngxsharedDICTsafe_add)
-* [ngx.shared.DICT.replace](#ngxsharedDICTreplace)
-* [ngx.shared.DICT.delete](#ngxsharedDICTdelete)
-* [ngx.shared.DICT.incr](#ngxsharedDICTincr)
-* [ngx.shared.DICT.flush_all](#ngxsharedDICTflush_all)
-* [ngx.shared.DICT.flush_expired](#ngxsharedDICTflush_expired)
-* [ngx.shared.DICT.get_keys](#ngxsharedDICTget_keys)
+* [ngx.shared.DICT](#ngxshareddict)
+* [ngx.shared.DICT.get](#ngxshareddictget)
+* [ngx.shared.DICT.get_stale](#ngxshareddictget_stale)
+* [ngx.shared.DICT.set](#ngxshareddict.set)
+* [ngx.shared.DICT.safe_set](#ngxshareddictsafe_set)
+* [ngx.shared.DICT.add](#ngxshareddictadd)
+* [ngx.shared.DICT.safe_add](#ngxshareddictsafe_add)
+* [ngx.shared.DICT.replace](#ngxshareddictreplace)
+* [ngx.shared.DICT.delete](#ngxshareddictdelete)
+* [ngx.shared.DICT.incr](#ngxshareddictincr)
+* [ngx.shared.DICT.flush_all](#ngxshareddictflush_all)
+* [ngx.shared.DICT.flush_expired](#ngxshareddictflush_expired)
+* [ngx.shared.DICT.get_keys](#ngxshareddictget_keys)
 
 [Back to TOC](#table-of-contents)
 
@@ -1724,7 +1722,7 @@ nlog:send
 
 ngx.re.find
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxrefind](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxrefind)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxrefind](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxrefind)
 
 [Back to TOC](#nginx-api-for-lua)
 
@@ -1807,7 +1805,7 @@ ngx.re.gsub
 
 **arguments:** 
 
-**returns:**  ok, err possiable values: 
+**returns:**  iterator, err possiable values: 
 
 **example:**
 ```lua
@@ -1824,7 +1822,7 @@ ngx.re.gsub
 
 **arguments:** 
 
-**returns:**  ok, err possiable values: 
+**returns:**  iterator, err possiable values: 
 
 **example:**
 ```lua
@@ -1835,61 +1833,61 @@ ngx.re.gsub
 
 ngx.decode_base64
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxdecode_base64](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxdecode_base64)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxdecode_base64](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxdecode_base64)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.encode_base64
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxencode_base64](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxencode_base64)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxencode_base64](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxencode_base64)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.md5_bin
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5_bin](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5_bin)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5_bin](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5_bin)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.md5
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxmd5)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.sha1_bin
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxsha1_bin](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxsha1_bin)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxsha1_bin](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxsha1_bin)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.crc32_short
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_short](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_short)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_short](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_short)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.crc32_long
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_long](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_long)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_long](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxcrc32_long)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.hmac_sha1
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxhmac_sha1](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxhmac_sha1)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxhmac_sha1](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxhmac_sha1)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.escape_uri
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxescape_uri](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxescape_uri)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxescape_uri](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxescape_uri)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.quote_sql_str
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxquote_sql_str](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxquote_sql_str)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxquote_sql_str](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxquote_sql_str)
 
 [Back to TOC](#nginx-api-for-lua)
 
@@ -1901,89 +1899,89 @@ Shared memory zones are always shared by all the nginx worker processes in the c
 
 The resulting object dict has the following methods:
 
-* [get](#ngx.shared.DICT.get)
-* [get_stale](#ngx.shared.DICT.get_stale)
-* [set](#ngx.shared.DICT.set)
-* [safe_set](#ngx.shared.DICT.safe_set)
-* [add](#ngx.shared.DICT.add)
-* [safe_add](#ngx.shared.DICT.safe_add)
-* [replace](#ngx.shared.DICT.replace)
-* [delete](#ngx.shared.DICT.delete)
-* [incr](#ngx.shared.DICT.incr)
-* [flush_all](#ngx.shared.DICT.flush_all)
-* [flush_expired](#ngx.shared.DICT.flush_expired)
-* [get_keys](#ngx.shared.DICT.get_keys)
+* [get](#ngxshareddictget)
+* [get_stale](#ngxshareddictget_stale)
+* [set](#ngxshareddictset)
+* [safe_set](#ngxshareddictsafe_set)
+* [add](#ngxshareddictadd)
+* [safe_add](#ngxshareddictsafe_add)
+* [replace](#ngxshareddictreplace)
+* [delete](#ngxshareddictdelete)
+* [incr](#ngxshareddictincr)
+* [flush_all](#ngxshareddictflush_all)
+* [flush_expired](#ngxshareddictflush_expired)
+* [get_keys](#ngxshareddictget_keys)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.get
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.get_stale
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_stale](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_stale)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_stale](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_stale)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.set
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictset](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictset)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictset](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictset)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.safe_set
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_set](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_set)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_set](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_set)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.add
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictadd](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictadd)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictadd](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictadd)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.safe_add
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_add](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_add)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_add](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictsafe_add)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.replace
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictreplace](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictreplace)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictreplace](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictreplace)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.delete
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictdelete](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictdelete)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictdelete](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictdelete)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.incr
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictincr](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictincr)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictincr](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictincr)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.flush_all
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_all](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_all)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_all](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_all)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.flush_expired
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_expired](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_expired)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_expired](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictflush_expired)
 
 [Back to TOC](#nginx-api-for-lua)
 
 ngx.shared.DICT.get_keys
 ------------------
-refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_keys](#https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_keys)
+refer to [https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_keys](https://github.com/openresty/lua-nginx-module/blob/master/README.markdown#ngxshareddictget_keys)
 
 [Back to TOC](#nginx-api-for-lua)
